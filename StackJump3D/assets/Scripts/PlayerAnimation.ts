@@ -15,20 +15,8 @@ export class PlayerAnimation extends Component {
     return clip;
   }
 
-  public play() {
+  public playJumpAnimation() {
     let name = this.getClip().name;
     this.skeletalAnimation.play(`${name}`);
-  }
-
-  protected update(dt: number): void {
-    if (this.done) return;
-
-    this.elapsed += dt;
-
-    if (this.elapsed >= 3) {
-      this.done = true;
-      this.play();
-      console.log("Belirlenen süre doldu: ", this.elapsed);
-    }
   }
 }
