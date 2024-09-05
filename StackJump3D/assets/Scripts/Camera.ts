@@ -12,12 +12,12 @@ export class Camera extends Component {
   protected update(deltaTime: number) {
     if (this.target) {
       this.follow(this.target, deltaTime);
-      console.log(this.node.position);
+      // console.log(this.node.position);
     }
   }
 
   follow(target: Node, deltaTime: number) {
-    const targetY = target.position.y + 10;
+    const targetY = target.position.y + 7;
     const currentY = this.node.position.y;
 
     const smoothY = math.lerp(currentY, targetY, this.smoothTime);

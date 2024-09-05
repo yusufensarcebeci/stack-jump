@@ -2,14 +2,14 @@
   "ver": "2.3.4",
   "importer": "fbx",
   "imported": true,
-  "uuid": "79209bfb-0de3-4b6e-828c-7dbdac2014af",
+  "uuid": "aecaad79-3087-4eb1-90ef-27f39da0d98e",
   "files": [
     "__original-animation-0.cconb"
   ],
   "subMetas": {
     "30732": {
       "importer": "gltf-skeleton",
-      "uuid": "79209bfb-0de3-4b6e-828c-7dbdac2014af@30732",
+      "uuid": "aecaad79-3087-4eb1-90ef-27f39da0d98e@30732",
       "displayName": "",
       "id": "30732",
       "name": "UnnamedSkeleton-0.skeleton",
@@ -26,7 +26,7 @@
     },
     "eca75": {
       "importer": "gltf-mesh",
-      "uuid": "79209bfb-0de3-4b6e-828c-7dbdac2014af@eca75",
+      "uuid": "aecaad79-3087-4eb1-90ef-27f39da0d98e@eca75",
       "displayName": "",
       "id": "eca75",
       "name": "Beta_Surface.mesh",
@@ -43,7 +43,7 @@
     },
     "01512": {
       "importer": "gltf-mesh",
-      "uuid": "79209bfb-0de3-4b6e-828c-7dbdac2014af@01512",
+      "uuid": "aecaad79-3087-4eb1-90ef-27f39da0d98e@01512",
       "displayName": "",
       "id": "01512",
       "name": "Beta_Joints.mesh",
@@ -60,20 +60,20 @@
     },
     "18d6f": {
       "importer": "gltf-animation",
-      "uuid": "79209bfb-0de3-4b6e-828c-7dbdac2014af@18d6f",
+      "uuid": "aecaad79-3087-4eb1-90ef-27f39da0d98e@18d6f",
       "displayName": "",
       "id": "18d6f",
       "name": "mixamo.com.animation",
       "userData": {
         "gltfIndex": 0,
-        "wrapMode": 1,
+        "wrapMode": 0,
         "sample": 30,
         "span": {
           "from": 0,
           "to": 2.5
         },
         "events": [],
-        "speed": 2
+        "speed": 2.5
       },
       "ver": "1.0.16",
       "imported": true,
@@ -84,7 +84,7 @@
     },
     "f1394": {
       "importer": "gltf-skeleton",
-      "uuid": "79209bfb-0de3-4b6e-828c-7dbdac2014af@f1394",
+      "uuid": "aecaad79-3087-4eb1-90ef-27f39da0d98e@f1394",
       "displayName": "",
       "id": "f1394",
       "name": "UnnamedSkeleton-1.skeleton",
@@ -101,7 +101,7 @@
     },
     "55e45": {
       "importer": "gltf-material",
-      "uuid": "79209bfb-0de3-4b6e-828c-7dbdac2014af@55e45",
+      "uuid": "aecaad79-3087-4eb1-90ef-27f39da0d98e@55e45",
       "displayName": "",
       "id": "55e45",
       "name": "Beta_HighLimbsGeoSG3.material",
@@ -117,7 +117,7 @@
     },
     "9f78e": {
       "importer": "gltf-material",
-      "uuid": "79209bfb-0de3-4b6e-828c-7dbdac2014af@9f78e",
+      "uuid": "aecaad79-3087-4eb1-90ef-27f39da0d98e@9f78e",
       "displayName": "",
       "id": "9f78e",
       "name": "Beta_Joints_MAT1.material",
@@ -133,7 +133,7 @@
     },
     "11b97": {
       "importer": "gltf-scene",
-      "uuid": "79209bfb-0de3-4b6e-828c-7dbdac2014af@11b97",
+      "uuid": "aecaad79-3087-4eb1-90ef-27f39da0d98e@11b97",
       "displayName": "",
       "id": "11b97",
       "name": "Jumping.prefab",
@@ -163,29 +163,29 @@
             "name": "mixamo.com",
             "from": 0,
             "to": 2.5,
-            "wrapMode": 1,
-            "speed": 2
+            "wrapMode": 0,
+            "speed": 2.5
           }
         ]
       }
     ],
-    "redirect": "79209bfb-0de3-4b6e-828c-7dbdac2014af@11b97",
+    "redirect": "aecaad79-3087-4eb1-90ef-27f39da0d98e@11b97",
     "assetFinder": {
       "meshes": [
-        "79209bfb-0de3-4b6e-828c-7dbdac2014af@eca75",
-        "79209bfb-0de3-4b6e-828c-7dbdac2014af@01512"
+        "aecaad79-3087-4eb1-90ef-27f39da0d98e@eca75",
+        "aecaad79-3087-4eb1-90ef-27f39da0d98e@01512"
       ],
       "skeletons": [
-        "79209bfb-0de3-4b6e-828c-7dbdac2014af@30732",
-        "79209bfb-0de3-4b6e-828c-7dbdac2014af@f1394"
+        "aecaad79-3087-4eb1-90ef-27f39da0d98e@30732",
+        "aecaad79-3087-4eb1-90ef-27f39da0d98e@f1394"
       ],
       "textures": [],
       "materials": [
-        "79209bfb-0de3-4b6e-828c-7dbdac2014af@55e45",
-        "79209bfb-0de3-4b6e-828c-7dbdac2014af@9f78e"
+        "aecaad79-3087-4eb1-90ef-27f39da0d98e@55e45",
+        "aecaad79-3087-4eb1-90ef-27f39da0d98e@9f78e"
       ],
       "scenes": [
-        "79209bfb-0de3-4b6e-828c-7dbdac2014af@11b97"
+        "aecaad79-3087-4eb1-90ef-27f39da0d98e@11b97"
       ]
     }
   }
