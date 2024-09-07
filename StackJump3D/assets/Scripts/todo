@@ -1,4 +1,9 @@
-✔ Jump animation implementation and create a function to start animate @done(24-09-04 17:04)
-✔ Get device screen size @done(24-09-04 19:20)
-✔ Detect Touch on area @done(24-09-04 19:52)
-✔ Create a jump fucntion for player @done(24-09-04 23:00)
+☐ Platfrom Mechanic
+✔ Touch Area & Touch Detect @done(24-09-06 21:37)
+✔ Get Device Screen Size @done(24-09-06 21:37)
+✔ Player Jump Mechanic @done(24-09-06 21:37)
+
+☐ Game States
+☐ UI Manager
+
+☐ restart

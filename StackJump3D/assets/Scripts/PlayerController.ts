@@ -21,7 +21,8 @@ export class PlayerController extends Component {
   @property(SkeletalAnimation) skeletalAnimation: SkeletalAnimation = null;
   @property(DeviceInfo) deviceInfo: DeviceInfo = null;
   @property(Node) touchArea: Node = null;
-  @property(Node) trigger: Node = null;
+  @property(Node) failTrigger: Node = null;
+  @property(Node) winTrigger: Node = null;
 
   private canJump: boolean = true;
   private tweenDuration: number = 0.7;
@@ -30,47 +31,59 @@ export class PlayerController extends Component {
 
   protected onLoad(): void {
     this.touchArea.on(Input.EventType.TOUCH_START, this.onTouchStart, this);
-    this.node.setPosition(new Vec3(0, 2, 0));
+    // this.node.setPosition(new Vec3(0, 2, 0));
     this.rb = this.node.getComponent(RigidBody);
-    console.log(this.rb);
   }
 
   protected start(): void {
-    let collider = this.trigger.getComponent(BoxCollider);
-    if (collider) {
-      collider.on("onTriggerEnter", this.onTriggerEnter, this);
+    let fail_collider = this.failTrigger.getComponent(BoxCollider);
+    if (fail_collider) {
+      fail_collider.on("onTriggerEnter", this.onFailTriggerEnter, this);
+    }
+    let win_collider = this.winTrigger.getComponent(BoxCollider);
+    if (win_collider) {
+      win_collider.on("onTriggerEnter", this.onWinTriggerEnter, this);
     }
     this.setContentSize();
   }
-  animComplete() {
-    this.canJump = true;
-    console.log("Anim Completed");
+
+  onFailTriggerEnter(event: ITriggerEvent) {
+    // if (event.otherCollider.name.startsWith("Obstacle")) {
+      console.log("Fail");
+      // let rb = this.node.getComponent(RigidBody)
+      // rb.type = RigidBody.Type.DYNAMIC
+      // rb.applyImpulse(new Vec3(0,-5,0))
+    // }
   }
 
-  public jump() {
+  onWinTriggerEnter(event: ITriggerEvent) {
+    // if (event.otherCollider.name == "Obstacle") {
+      Tween.stopAllByTarget(event.otherCollider.node);
+      Tween.stopAllByTarget(this.node);
+    // }
+  }
+
+  onAnimationComplete() {
+    this.canJump = true;
+    console.log("Animation Completed");
+  }
+
+  private jump() {
     if (!this.canJump) return;
     this.canJump = false;
-    this.jumpAnim();
-    this.setPlayerPosByPhysic();
+    this.jumpAnimation();
+    this.setPlayerPositionByTween();
   }
 
-  private jumpAnim() {
+  private jumpAnimation() {
     let jumpAnim = this.skeletalAnimation.defaultClip.name;
     this.skeletalAnimation.play(jumpAnim);
 
     this.skeletalAnimation.once(
       SkeletalAnimation.EventType.FINISHED,
-      this.animComplete,
+      this.onAnimationComplete,
       this
     );
-  }
-
-  onTriggerEnter(event: ITriggerEvent) {
-    let targetNode = event.otherCollider.node;
-    if (targetNode.name == "FailCollider") {
-      // this.rb.applyImpulse(new Vec3(1, 1, 0));
-      this.skeletalAnimation.stop();
-    }
   }
 
   private setPlayerPosByPhysic() {
@@ -87,17 +100,30 @@ export class PlayerController extends Component {
   private setPlayerPositionByTween() {
     let self = this;
     const currentPosition = this.node.position;
+    let jumpDuration: number = 0.25;
+    let landDuration: number = 0.25;
 
-    const jumpDown = new Vec3(
+    const jumpUp = new Vec3(
       currentPosition.x,
       currentPosition.y + 1,
       currentPosition.z
     );
+
+    const jumpDown = new Vec3(
+      currentPosition.x,
+      currentPosition.y,
+      currentPosition.z
+    );
+
     Tween.stopAllByTarget(this.node);
+
     tween(this.node)
       .delay(0.3)
-      .to(this.tweenDuration, { position: jumpDown }, { easing: "quintOut" })
-      .call(() => {})
+      .to(jumpDuration, { position: jumpUp }, { easing: "sineOut" })
+      .to(landDuration, { position: jumpDown }, { easing: "sineIn" })
+      .call(() => {
+        console.log("Zıplama tamamlandı!");
+      })
       .start();
   }
 
