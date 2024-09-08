@@ -14,11 +14,13 @@ import {
   Vec3,
 } from "cc";
 import { DeviceInfo } from "./DeviceInfo";
+import { ObstacleManager } from "./ObstacleManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerController")
 export class PlayerController extends Component {
   @property(SkeletalAnimation) skeletalAnimation: SkeletalAnimation = null;
+  @property(ObstacleManager) obstacleManager: ObstacleManager = null;
   @property(DeviceInfo) deviceInfo: DeviceInfo = null;
   @property(Node) touchArea: Node = null;
   @property(Node) failTrigger: Node = null;
@@ -48,19 +50,16 @@ export class PlayerController extends Component {
   }
 
   onFailTriggerEnter(event: ITriggerEvent) {
-    // if (event.otherCollider.name.startsWith("Obstacle")) {
-      console.log("Fail");
-      // let rb = this.node.getComponent(RigidBody)
-      // rb.type = RigidBody.Type.DYNAMIC
-      // rb.applyImpulse(new Vec3(0,-5,0))
-    // }
+    console.log("Fail");
   }
 
   onWinTriggerEnter(event: ITriggerEvent) {
-    // if (event.otherCollider.name == "Obstacle") {
-      Tween.stopAllByTarget(event.otherCollider.node);
-      Tween.stopAllByTarget(this.node);
-    // }
+    let target = event.otherCollider;
+    target.node.getComponent(BoxCollider).enabled= false;
+    Tween.stopAllByTarget(target.node);
+    Tween.stopAllByTarget(this.node);
+    this.obstacleManager.spawnObstacle();
+    console.log(target);
   }
 
   onAnimationComplete() {

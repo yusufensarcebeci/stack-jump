@@ -6,6 +6,11 @@ export class DeviceInfo extends Component {
   GAME_WIDTH: number = null;
   GAME_HEIGHT: number = null;
 
+  protected onLoad(): void {
+    this.GAME_WIDTH = view.getVisibleSizeInPixel().width;
+    this.GAME_HEIGHT = view.getVisibleSizeInPixel().height;
+  }
+
   start() {
     this.GAME_WIDTH = view.getVisibleSizeInPixel().width;
     this.GAME_HEIGHT = view.getVisibleSizeInPixel().height;
@@ -15,7 +20,11 @@ export class DeviceInfo extends Component {
     );
   }
 
-  public getDeviceSize(): Vec2 {
-    return new Vec2(this.GAME_WIDTH, this.GAME_HEIGHT);
+  public getDeviceSize() {
+    let size = { 
+        w: this.GAME_WIDTH, 
+        h: this.GAME_HEIGHT 
+    };
+    return size;
 }
 }
