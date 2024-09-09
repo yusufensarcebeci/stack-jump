@@ -59,7 +59,7 @@ export class ObstacleManager extends Component {
 
     tween(obstacle)
       .to(
-        1,
+        tweenDuration,
         { position: new Vec3(0, obstacle.position.y, obstacle.position.z) },
         {
           easing: "linear",

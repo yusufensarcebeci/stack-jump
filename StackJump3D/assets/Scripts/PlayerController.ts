@@ -64,6 +64,7 @@ export class PlayerController extends Component {
     this.winTrigger.getComponent(BoxCollider).enabled = false;
     this.failTrigger.getComponent(BoxCollider).enabled = false;
     this.uiManager.handleEndScreen();
+    this.scoreHandler.updategameOverScoreLabel()
   }
 
   onWinTriggerEnter(event: ITriggerEvent) {
