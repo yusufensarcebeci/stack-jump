@@ -7,14 +7,16 @@ export class DeviceInfo extends Component {
   GAME_HEIGHT: number = null;
 
   protected onLoad(): void {
-    this.GAME_WIDTH = view.getVisibleSizeInPixel().width;
-    this.GAME_HEIGHT = view.getVisibleSizeInPixel().height;
+    this.GAME_WIDTH = view.getVisibleSize().width;
+    this.GAME_HEIGHT = view.getVisibleSize().height;
+    console.log(
+      `Screen Width: ${this.GAME_WIDTH},\n Screen Height: ${this.GAME_HEIGHT}`
+    );
   }
 
   start() {
     this.GAME_WIDTH = view.getVisibleSizeInPixel().width;
     this.GAME_HEIGHT = view.getVisibleSizeInPixel().height;
-
     console.log(
       `Screen Width: ${this.GAME_WIDTH},\n Screen Height: ${this.GAME_HEIGHT}`
     );

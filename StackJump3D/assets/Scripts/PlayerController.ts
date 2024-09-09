@@ -15,29 +15,35 @@ import {
 } from "cc";
 import { DeviceInfo } from "./DeviceInfo";
 import { ObstacleManager } from "./ObstacleManager";
+import { ScoreHandler } from "./ScoreHandler";
+import { GameManager, GameState } from "./GameManager";
+import { UIManager } from "./UIManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerController")
 export class PlayerController extends Component {
+  @property(GameManager) gameManager: GameManager = null;
+  @property(UIManager) uiManager: UIManager = null;
   @property(SkeletalAnimation) skeletalAnimation: SkeletalAnimation = null;
   @property(ObstacleManager) obstacleManager: ObstacleManager = null;
+  @property(ScoreHandler) scoreHandler: ScoreHandler = null;
   @property(DeviceInfo) deviceInfo: DeviceInfo = null;
+
   @property(Node) touchArea: Node = null;
   @property(Node) failTrigger: Node = null;
   @property(Node) winTrigger: Node = null;
 
   private canJump: boolean = true;
-  private tweenDuration: number = 0.7;
   private rb: RigidBody = null;
-  jumpForce: number = 5;
+  private initPosition: Vec3 = null;
 
   protected onLoad(): void {
     this.touchArea.on(Input.EventType.TOUCH_START, this.onTouchStart, this);
-    // this.node.setPosition(new Vec3(0, 2, 0));
     this.rb = this.node.getComponent(RigidBody);
   }
 
   protected start(): void {
+    this.initPosition = new Vec3(this.node.getPosition());
     let fail_collider = this.failTrigger.getComponent(BoxCollider);
     if (fail_collider) {
       fail_collider.on("onTriggerEnter", this.onFailTriggerEnter, this);
@@ -50,21 +56,28 @@ export class PlayerController extends Component {
   }
 
   onFailTriggerEnter(event: ITriggerEvent) {
-    console.log("Fail");
+    console.log("fail");
+    if (this.gameManager.getState() == GameState.GAME_OVER) return;
+    this.gameManager.setState(GameState.GAME_OVER); 
+    Tween.stopAllByTarget(event.otherCollider.node);
+    Tween.stopAllByTarget(this.node);
+    this.winTrigger.getComponent(BoxCollider).enabled = false;
+    this.failTrigger.getComponent(BoxCollider).enabled = false;
+    this.uiManager.handleEndScreen();
   }
 
   onWinTriggerEnter(event: ITriggerEvent) {
+    console.log("win");
+    if (this.gameManager.getState() == GameState.GAME_OVER) return;
     let target = event.otherCollider;
-    target.node.getComponent(BoxCollider).enabled= false;
     Tween.stopAllByTarget(target.node);
     Tween.stopAllByTarget(this.node);
     this.obstacleManager.spawnObstacle();
-    console.log(target);
+    this.scoreHandler.incrementScore();
   }
 
   onAnimationComplete() {
     this.canJump = true;
-    console.log("Animation Completed");
   }
 
   private jump() {
@@ -85,22 +98,11 @@ export class PlayerController extends Component {
     );
   }
 
-  private setPlayerPosByPhysic() {
-    this.rb = this.node.getComponent(RigidBody);
-    if (this.rb) {
-      this.scheduleOnce(() => {
-        this.rb.applyImpulse(new Vec3(0, this.jumpForce, 0));
-      }, 0.3);
-    } else {
-      console.log("Rb Bulunamadı");
-    }
-  }
-
   private setPlayerPositionByTween() {
     let self = this;
     const currentPosition = this.node.position;
-    let jumpDuration: number = 0.25;
-    let landDuration: number = 0.25;
+    let jumpDuration: number = 0.20;
+    let landDuration: number = 0.20;
 
     const jumpUp = new Vec3(
       currentPosition.x,
@@ -117,12 +119,9 @@ export class PlayerController extends Component {
     Tween.stopAllByTarget(this.node);
 
     tween(this.node)
-      .delay(0.3)
+      .delay(0.2)
       .to(jumpDuration, { position: jumpUp }, { easing: "sineOut" })
       .to(landDuration, { position: jumpDown }, { easing: "sineIn" })
-      .call(() => {
-        console.log("Zıplama tamamlandı!");
-      })
       .start();
   }
 
@@ -137,5 +136,13 @@ export class PlayerController extends Component {
         this.deviceInfo.GAME_WIDTH * 2,
         this.deviceInfo.GAME_HEIGHT * 2
       );
+  }
+
+  resetPlayer() {
+    this.scheduleOnce(() => {
+      this.winTrigger.getComponent(BoxCollider).enabled = true;
+      this.failTrigger.getComponent(BoxCollider).enabled = true;
+      this.node.setPosition(new Vec3(0, -0.3, 0));
+    }, 0.2);
   }
 }

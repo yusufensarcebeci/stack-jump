@@ -3,12 +3,14 @@
     ✔ Player Jump Mechanic @done(24-09-06 21:37)   
     ✔ Touch Area & Touch Detect @done(24-09-06 21:37)
     ✔ Get Device Screen Size @done(24-09-06 21:37)
-    ☐ Game Restart
-    ☐ Score
-        ☐ Add Score
+    ✔ Game Restart @done(24-09-09 11:39)
+    ✔ Score @done(24-09-09 11:39)
+        ✔ Add Score @done(24-09-08 22:18)
+        ☐ Game Over Score
     ☐ UI Manager
         ✔ Init Scene @done(24-09-08 19:54)
         ☐ End Scene
-        ☐ Game Scene
+        ✔ Game Scene @done(24-09-09 11:39)
         ✔ Loading Scene @done(24-09-08 19:54)
+    ✔ Camera Move @done(24-09-09 16:30)
     

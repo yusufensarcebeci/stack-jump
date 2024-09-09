@@ -1,11 +1,13 @@
-import { _decorator, Component, math, Node, UITransform, Vec2 } from "cc";
+import { _decorator, Button, Component, EventTouch, Input, math, Node, UITransform, Vec2 } from "cc";
 import { GameManager, GameState } from "./GameManager";
 import { DeviceInfo } from "./DeviceInfo";
+import { ObstacleManager } from "./ObstacleManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("UIManager")
 export class UIManager extends Component {
   @property(GameManager) gameManager: GameManager = null;
+  @property(ObstacleManager) obstacleManager: ObstacleManager = null;
   @property(DeviceInfo) deviceInfo: DeviceInfo = null;
 
   @property(Node) loadingScreen: Node = null;
@@ -13,11 +15,26 @@ export class UIManager extends Component {
   @property(Node) gameScreen: Node = null;
   @property(Node) endScreen: Node = null;
 
+  @property(Node) touchArea: Node = null;
   @property(Node) load: Node = null;
   @property(Node) loadingScreenBackground: Node = null;
 
   private onPlayButtonClicked() {
     this.handleGameScreen();
+    this.obstacleManager.firstSpawn();
+  }
+
+  private onHomeButtonClicked(){
+
+  }
+
+  private onRetryButtonClicked() {
+    this.scheduleOnce(() => {
+      this.handleLoading();
+    });
+    this.scheduleOnce(() => {
+      this.onPlayButtonClicked();
+    }, 2);
   }
 
   protected onLoad(): void {
@@ -37,6 +54,7 @@ export class UIManager extends Component {
     this.hideAllScreens();
     if (this.gameScreen) {
       this.gameScreen.active = true;
+      this.touchArea.active = true;
       this.gameManager.setState(GameState.GAME_RUNNING);
     }
   }
@@ -45,6 +63,7 @@ export class UIManager extends Component {
     this.hideAllScreens();
     if (this.endScreen) {
       this.endScreen.active = true;
+      this.touchArea.active = false;
       this.gameManager.setState(GameState.GAME_OVER);
     }
   }
@@ -52,6 +71,7 @@ export class UIManager extends Component {
     this.hideAllScreens();
     if (this.initScreen) {
       this.initScreen.active = true;
+      this.touchArea.active = false;
       this.gameManager.setState(GameState.INIT);
     }
   }
