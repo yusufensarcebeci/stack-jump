@@ -13,12 +13,6 @@ export class ScoreHandler extends Component {
     return this.score;
   }
 
-  public resetScore() {
-    this.score = 0;
-    this.updateScoreLabel();
-    return this.score;
-  }
-
   public incrementScore() {
     this.score += 1;
     this.updateScoreLabel();
@@ -40,5 +34,11 @@ export class ScoreHandler extends Component {
         label.string = `Your Score: ${this.score}`;
       }
     }
+  }
+  
+  public resetScore() {
+    this.score = 0;
+    this.updateScoreLabel();
+    return this.score;
   }
 }

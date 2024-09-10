@@ -4,13 +4,11 @@ const { ccclass, property } = _decorator;
 
 @ccclass("Camera")
 export class Camera extends Component {
-  @property(Node) target: Node = null;
-  @property smoothTime: number = 0.05;
   @property(GameManager) gameManager: GameManager = null;
+  @property(Node) target: Node = null;
+  @property(Number) smoothTime: number = 0.05;
 
   tempPosition: Vec3 = new Vec3();
-
-  protected start(): void {}
 
   private smoothFollow(offsetY: number, offsetZ: number, deltaTime: number) {
     const targetY = this.target.position.y + offsetY;

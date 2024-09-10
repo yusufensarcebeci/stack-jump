@@ -1,6 +1,16 @@
-import { _decorator, Button, Component, EventTouch, Input, math, Node, UITransform, Vec2 } from "cc";
+import {
+  _decorator,
+  Button,
+  Component,
+  EventTouch,
+  Input,
+  math,
+  Node,
+  UITransform,
+  Vec2,
+  view,
+} from "cc";
 import { GameManager, GameState } from "./GameManager";
-import { DeviceInfo } from "./DeviceInfo";
 import { ObstacleManager } from "./ObstacleManager";
 const { ccclass, property } = _decorator;
 
@@ -8,7 +18,6 @@ const { ccclass, property } = _decorator;
 export class UIManager extends Component {
   @property(GameManager) gameManager: GameManager = null;
   @property(ObstacleManager) obstacleManager: ObstacleManager = null;
-  @property(DeviceInfo) deviceInfo: DeviceInfo = null;
 
   @property(Node) loadingScreen: Node = null;
   @property(Node) initScreen: Node = null;
@@ -19,13 +28,31 @@ export class UIManager extends Component {
   @property(Node) load: Node = null;
   @property(Node) loadingScreenBackground: Node = null;
 
+  protected onLoad(): void {
+    this.loadingScreenBackground
+      .getComponent(UITransform)
+      .setContentSize(
+        view.getVisibleSize().width,
+        view.getVisibleSize().height
+      );
+    this.handleLoading();
+    this.scheduleOnce(() => {
+      this.handleInitScreen();
+    }, 2);
+  }
+  // Home Button Click (Menu Button)
+  private onHomeButtonClicked() {
+    this.scheduleOnce(() => {
+      this.handleLoading();
+    });
+    this.scheduleOnce(() => {
+      this.handleInitScreen();
+    }, 2);
+  }
+
   private onPlayButtonClicked() {
     this.handleGameScreen();
     this.obstacleManager.firstSpawn();
-  }
-
-  private onHomeButtonClicked(){
-
   }
 
   private onRetryButtonClicked() {
@@ -34,19 +61,6 @@ export class UIManager extends Component {
     });
     this.scheduleOnce(() => {
       this.onPlayButtonClicked();
-    }, 2);
-  }
-
-  protected onLoad(): void {
-    this.loadingScreenBackground
-      .getComponent(UITransform)
-      .setContentSize(
-        this.deviceInfo.getDeviceSize().w,
-        this.deviceInfo.getDeviceSize().h
-      );
-    this.handleLoading();
-    this.scheduleOnce(() => {
-      this.handleInitScreen();
     }, 2);
   }
 
@@ -61,12 +75,15 @@ export class UIManager extends Component {
 
   public handleEndScreen() {
     this.hideAllScreens();
-    if (this.endScreen) {
-      this.endScreen.active = true;
-      this.touchArea.active = false;
-      this.gameManager.setState(GameState.GAME_OVER);
-    }
+    this.scheduleOnce(() => {
+      if (this.endScreen) {
+        this.endScreen.active = true;
+        this.touchArea.active = false;
+        this.gameManager.setState(GameState.GAME_OVER);
+      }
+    }, 1);
   }
+
   public handleInitScreen() {
     this.hideAllScreens();
     if (this.initScreen) {

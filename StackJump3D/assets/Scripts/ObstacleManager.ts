@@ -99,6 +99,7 @@ export class ObstacleManager extends Component {
     }
   }
 
+  // Called when the retry button is clicked
   public resetPool() {
     this.spawnPosY = 0.4;
     while (this.activeObstacles.length > 0) {
