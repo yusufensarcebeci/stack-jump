@@ -36,7 +36,7 @@ export class Camera extends Component {
         break;
       case GameState.GAME_OVER:
         if (this.target) {
-          this.smoothFollow(8, 17, deltaTime);
+          this.smoothFollow(10, 15, deltaTime );
         }
         break;
     }
